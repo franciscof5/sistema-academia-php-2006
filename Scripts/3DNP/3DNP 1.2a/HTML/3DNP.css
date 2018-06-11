@@ -1,0 +1,5 @@
+body		{ background-repeat:no-repeat; overflow:hidden; margin: 0px; padding: 0px; border-style:none; background-color: #BCBCBC;}
+html		{ border-style:none; }
+td,p		{ font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #424242; text-decoration:none; }
+a			{ color: #424242; text-decoration: underline; font-weight:bold; }
+a:hover		{ color: #FEFEFE; text-decoration: underline; font-weight:bold; }

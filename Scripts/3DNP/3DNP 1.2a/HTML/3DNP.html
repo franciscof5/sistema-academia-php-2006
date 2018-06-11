@@ -1,0 +1,280 @@
+<html>
+<head>
+	
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="imagetoolbar" content="no">
+<title>3DNP - (C) 2006 Thorsten Schl&uuml;ter - www.thoro.de</title>
+
+<link type="text/css" href="3DNP.css" rel="stylesheet">
+
+<script type="text/JavaScript" src="3DNP_config.js"></script>
+
+<script type="text/JavaScript">
+<!--
+
+// 3DNP 1.2a
+// Copyright (C) 2006 Thorsten Schlueter - www.thoro.de
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+
+// internal parameters - do not change
+perlevel	= total/levels;
+var time	= 40;
+var timer	= null;
+frictionx	= (1 - friction);
+frictiony	= (1 - friction) / 1.5;
+xrest = 0;
+yrest = 0;
+if ( viewmode == 'object' ) multiplicator = 1;
+if ( viewmode != 'object' ) multiplicator = -1;
+imagesProcessed = 1;
+loadingcomplete = false;
+
+
+if (document.captureEvents) {
+	document.captureEvents( Event.MOUSEMOVE | Event.MOUSEDOWN | Event.MOUSEUP | Event.KEYPRESS | Event.KEYDOWN | Event.KEYUP );
+}
+
+document.onmousemove = mousepos;
+document.onmousedown = startHandler;
+document.onmouseup   = stopHandler;
+document.onkeypress  = keypressed;
+document.onkeydown   = startHandler;
+document.onkeyup     = stopHandler;
+
+// Functions
+
+function startHandler(e) {
+	rotate();
+}
+
+
+function stopHandler(e) {
+	stop();
+}
+
+
+function stop() {
+	clearTimeout(timer);
+	
+	if ( (rotomatic != 0) && (rotoresume != 0) ) {
+		setTimeout('autorotate()',Math.abs(rotoresume * 1000));	
+	}	
+}
+
+function autorotate() { 
+	
+	clearTimeout(timer);
+	
+	yposition = Math.ceil(imagenumber/perlevel);
+	xposition = imagenumber-((yposition-1)*perlevel);
+	
+	if ( rotomatic > 0 ) xpositionnew = xposition + 1;
+	if ( rotomatic < 0 ) xpositionnew = xposition - 1;
+	ypositionnew = yposition;
+
+	if ( xpositionnew < 1 ) xpositionnew = (total/levels);
+	if ( xpositionnew > (total/levels) ) xpositionnew = 1;
+
+	imagenumbernew = ((ypositionnew-1)*perlevel)+xpositionnew;
+	
+	imagenumber = imagenumbernew;
+	document.body.background = ThreeDNPImage[imagenumber].src; 
+	timer = setTimeout('autorotate()',Math.abs(rotomatic));
+}
+
+
+function rotate(x,y) { 
+	
+	if ( loadingcomplete != true ) return;
+	
+	clearTimeout(timer);
+
+	yposition = Math.ceil(imagenumber/perlevel);
+	xposition = imagenumber-((yposition-1)*perlevel);
+
+	if ( x == undefined ) {
+		x = xposition;
+		y = yposition;
+		xdif = 0;
+ 		ydif = 0;
+	}
+	
+	else {
+		xdif = xrest * frictionx + x - xnew;
+		ydif = yrest * frictiony + y - ynew;
+	}
+	
+	xdiffull = Math.round(xdif/8);
+	ydiffull = Math.round(ydif/12);
+	xrest = xdif - xdiffull;
+	yrest = ydif - ydiffull;
+
+	xpositionnew = xposition + xdiffull * multiplicator;
+	ypositionnew = yposition + ydiffull * multiplicator;
+	
+	if ( xpositionnew < 1 ) xpositionnew = (total/levels);
+	if ( xpositionnew > (total/levels) ) xpositionnew = 1;
+	if ( ypositionnew < 1 ) ypositionnew = 1;
+	if ( ypositionnew > levels ) ypositionnew = levels;
+
+	imagenumbernew = ((ypositionnew-1)*perlevel)+xpositionnew;
+	
+	imagenumber = imagenumbernew;
+	document.body.background = ThreeDNPImage[imagenumber].src; 
+	
+	timer = setTimeout('rotate('+xnew+','+ynew+')',time);
+}
+
+
+function mousepos(e) {
+
+	if (document.layers) {
+		xnew = e.x;
+		ynew = e.y;
+	}
+	else if (document.all) {
+		xnew = event.clientX;
+		ynew = event.clientY;
+	}
+	else if (document.getElementById) {
+		xnew = e.clientX;
+		ynew = e.clientY;
+	}
+}
+
+function keypressed(e) {
+
+	var code;
+	if (!e) var e = window.event;
+	if (e.keyCode) code = e.keyCode;
+	else if (e.which) code = e.which;
+
+	yposition = Math.ceil(imagenumber/perlevel);
+	xposition = imagenumber-((yposition-1)*perlevel);
+	xpositionnew = xposition;
+	ypositionnew = yposition;
+	
+	if ( code == keycodes[0] ) ypositionnew = yposition +1 * multiplicator;
+	if ( code == keycodes[1] ) xpositionnew = xposition -1 * multiplicator;
+	if ( code == keycodes[2] ) ypositionnew = yposition -1 * multiplicator;
+	if ( code == keycodes[3] ) xpositionnew = xposition +1 * multiplicator;
+	
+	if ( xpositionnew < 1 ) xpositionnew = (total/levels);
+	if ( xpositionnew > (total/levels) ) xpositionnew = 1;
+	if ( ypositionnew < 1 ) ypositionnew = 1;
+	if ( ypositionnew > levels ) ypositionnew = levels;
+
+	imagenumbernew = ((ypositionnew-1)*perlevel)+xpositionnew;
+	
+	imagenumber = imagenumbernew;
+	document.body.background = ThreeDNPImage[imagenumber].src; 	
+	
+}
+
+
+function leadingZero(source,n) { 
+	
+	filled = source;
+	for (i=0;i<(n-source.length);i++) {
+		filled = '0'+filled;
+	}
+	return(filled);
+}
+
+
+function preloadImages() {
+	
+	ThreeDNPImage = new Array();
+	// only in loader: document.getElementById('loadingbar').width = barLength;
+	
+	if ( filemode == 'NameNumber' ) { 
+
+		for ( u=1; u<=total; u++) {
+
+			ThreeDNPImage[u] = new Image();
+			imagenumberstring    = u.toString();
+			imagename            = filename+leadingZero(imagenumberstring,4);
+			ThreeDNPImage[u].src = 'images/'+imagename+suffix;
+			setTimeout('checkLoad('+u+')' ,30);  //u*30); //100
+		}
+	}
+			
+	if ( filemode == 'RowShot' ) {
+		r=1; 
+		s=1;
+		
+		for ( u=1; u<=total; u++) {
+
+			ThreeDNPImage[u]     = new Image();
+			rownumberstring      = r.toString();
+			shotnumberstring     = s.toString();			
+			imagename            = 'Row'+leadingZero(rownumberstring,2)+'shot'+leadingZero(shotnumberstring,2);
+			ThreeDNPImage[u].src = 'images/'+imagename+suffix;
+			s++;
+			if ( s > perlevel ) { 
+				r++;	
+				s=1;
+			}
+			setTimeout('checkLoad('+u+')' ,30);  //u*30); //100
+		}
+	}
+}
+
+function checkLoad(number) {
+	
+	(ThreeDNPImage[number].complete)? displayBar() : setTimeout('checkLoad('+number+')', 10); //100
+
+}
+
+function displayBar() {
+
+	imagesProcessed++;
+
+	// only in loader: document.getElementById('loadingbar').width = barLength - (Math.ceil (barLength / (total / imagesProcessed)));
+
+	if (imagesProcessed >= ThreeDNPImage.length ) {
+		setTimeout('launch();', 500); 
+	}	
+}
+
+function launch() {
+	
+	loadingcomplete = true;
+	
+	imagenumber = (((startlevel-1)*perlevel)+1);
+	document.body.background = ThreeDNPImage[imagenumber].src;
+	document.images['loading'].width = 0;
+	document.images['loading'].height = 0;
+	
+	if ( (rotomatic != 0) ) {
+		autorotate();	
+	}
+}
+
+
+-->
+</script>
+
+</head>
+
+<body onLoad="preloadImages();">
+
+<img src="background.gif" id="loading" name="loading" width="300" height="300" border="0">
+
+</body>
+
+</html>
