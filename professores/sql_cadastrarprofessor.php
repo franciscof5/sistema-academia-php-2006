@@ -23,18 +23,18 @@ $email = $_POST['profEmail'];
 $telefone = $_POST['profTelefone'];
 
 
-$buscarNome = mysql_query("SELECT nome FROM professores WHERE nome='$nome'");
+$buscarNome = mysqli_query($con, "SELECT nome FROM professores WHERE nome='$nome'");
 
-while ($row = mysql_fetch_array($buscarNome)) {
+while ($row = mysqli_fetch_assoc($buscarNome)) {
 	if($row['nome']==$nome)
 	$nomeCadastrado = true;
 	else
 	$nomeCadastrado = false;
 }
 
-$buscarEmail = mysql_query("SELECT email FROM professores");
+$buscarEmail = mysqli_query($con, "SELECT email FROM professores");
 
-while ($row2 = mysql_fetch_array($buscarEmail)) {
+while ($row2 = mysqli_fetch_assoc($buscarEmail)) {
 	if($row2['email']==$email)
 	$emailCadastrado = true;
 	else
@@ -42,7 +42,7 @@ while ($row2 = mysql_fetch_array($buscarEmail)) {
 }
 
 if(!$nomeCadastrado and !$emailCadastrado) {
-	$inserir = mysql_query("INSERT INTO `professores` (`nome`, `endereco`, `cidade`, `email`, `telefone`) VALUES ('$nome', '$adress', '$cidade', '$email', '$telefone');");
+	$inserir = mysqli_query($con, "INSERT INTO `professores` (`nome`, `endereco`, `cidade`, `email`, `telefone`) VALUES ('$nome', '$adress', '$cidade', '$email', '$telefone');");
 	if($inserir) {
 		echo "<p align='center'><h3>$nome cadastrado no sistema</h3></p>";
 		echo "<p><br /><a href='index_professores.php'>voltar</a></p>";

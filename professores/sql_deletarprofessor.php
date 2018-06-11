@@ -14,8 +14,8 @@ include("../logaracademia.php");
 $nome = $_POST['nome'];
 $professorID = $_POST['professorID'];
 
-$deletar = mysql_query("DELETE FROM professores WHERE nome='$nome'");
-$deletar2 = mysql_query("DELETE FROM horarios WHERE profID='$professorID'");
+$deletar = mysqli_query($con, "DELETE FROM professores WHERE nome='$nome'");
+$deletar2 = mysqli_query($con, "DELETE FROM horarios WHERE profID='$professorID'");
 
 if($deletar and $deletar2) {
 	echo "<p align='center'><h3>Professor $nome e todos seu horários foram deletados</h3></p>";

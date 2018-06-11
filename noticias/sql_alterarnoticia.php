@@ -10,7 +10,7 @@ $mes = $_POST['mes'];
 $ano = $_POST['ano'];
 
 
-$alterar = mysql_query("UPDATE noticias SET titulo='$titulo', noticia='$noticia', categoria='$categoria', dia='$dia', mes='$mes', ano='$ano' WHERE noticiaID='$noticiaID'");
+$alterar = mysqli_query($con, "UPDATE noticias SET titulo='$titulo', noticia='$noticia', categoria='$categoria', dia='$dia', mes='$mes', ano='$ano' WHERE noticiaID='$noticiaID'");
 
 if($alterar) {
 	echo "Sucesso";

@@ -16,7 +16,7 @@ $dia = $_POST['dia'];
 $mes = $_POST['mes'];
 $ano = $_POST['ano'];
 
-$inserir = mysql_query("INSERT INTO `noticias` (`ano`, `mes`, `dia`, `titulo`, `noticia`, `categoria`, `noticiaID`) VALUES ('$ano', '$mes', '$dia', '$titulo', '$noticia', '$categoria', '');");
+$inserir = mysqli_query($con, "INSERT INTO `noticias` (`ano`, `mes`, `dia`, `titulo`, `noticia`, `categoria`, `noticiaID`) VALUES ('$ano', '$mes', '$dia', '$titulo', '$noticia', '$categoria', '');");
 if($inserir) {
 	echo "Notícia adicionada com sucesso!";
 	echo "<br /><br /><a href='index_noticia.php'>voltar</a>";

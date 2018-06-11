@@ -24,7 +24,7 @@
 include("../logaracademia.php");
 
 //
-$seleciona_professores = mysql_query("SELECT * FROM professores ORDER BY nome");
+$seleciona_professores = mysqli_query($con, "SELECT * FROM professores ORDER BY nome");
 
 echo "<center>
 		<table width='80%' border='1'>
@@ -37,7 +37,7 @@ echo "<center>
 			<td class='titulo'>Alterar</td>
 			<td class='titulo'>Deletar</td>
 		  </tr>";
-while ($linha=mysql_fetch_array($seleciona_professores)) {
+while ($linha=mysqli_fetch_assoc($seleciona_professores)) {
 	echo "
 		  <tr>
 			<td class='impar'>".$linha['nome']."</td>

@@ -24,7 +24,7 @@
 include("../logaracademia.php");
 
 //
-$seleciona_atividades = mysql_query("SELECT * FROM atividades");
+$seleciona_atividades = mysqli_query($con, "SELECT * FROM atividades");
 //
 
 echo "<center>
@@ -35,7 +35,7 @@ echo "<center>
 			<td class='titulo'>Alterar</td>
 			<td class='titulo'>Deletar</td>
 		  </tr>";
-while ($linha=mysql_fetch_array($seleciona_atividades)) {
+while ($linha=mysqli_fetch_assoc($seleciona_atividades)) {
 	echo "
 		  <tr>
 			<td class='impar'>".$linha['titulo']."</td>
@@ -44,7 +44,7 @@ while ($linha=mysql_fetch_array($seleciona_atividades)) {
 				<form action='alterar_atividade.php' method='post'>
 					<input type='hidden' value='".$linha['titulo']."' name='titulo'/>
 					<input type='hidden' value='".$linha['descricao']."' name='descricao'/>
-					<input type='hidden' value='".$linha['ativID']."' name='atividadeID'/>
+					<input type='hidden' value='".$linha['atividadeID']."' name='atividadeID'/>
 					<input type='image' src='../alterar.jpg' />
 				</form>
 			</td>
@@ -52,7 +52,7 @@ while ($linha=mysql_fetch_array($seleciona_atividades)) {
 				<form action='sql_deletaratividade.php' method='post'>
 					<input type='hidden' value='".$linha['titulo']."' name='titulo'/>
 					<input type='hidden' value='".$linha['descricao']."' name='descricao'/>
-					<input type='hidden' value='".$linha['ativID']."' name='atividadeID'/>
+					<input type='hidden' value='".$linha['atividadeID']."' name='atividadeID'/>
 					<input type='image' src='../deletar.jpg' />
 				</form>
 			</td>

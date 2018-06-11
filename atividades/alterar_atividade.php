@@ -39,7 +39,9 @@ $atividadeID = $_POST['atividadeID'];
 $endereco = "Adress";
 $cidade = "City";
 $email = "Mail-me shit";
-$telefone = "1323412";*/
+$telefone = "1323412";
+#$nome on line51 removed
+*/
 
 echo "
 <center>
@@ -48,7 +50,7 @@ echo "
 		Titulo:
 		<br />
 		<input type='text' name='titulo' value='".$titulo."'/>
-		$nome
+		
 		<br />
 	</label>
 	<label>

@@ -30,13 +30,13 @@ include("../logaracademia.php");
 $horarioID = $_POST['horarioID'];
 
 //faz as buscas, ta brincando?
-$seleciona_professor = mysql_query("SELECT * FROM professores ORDER BY nome");
-$seleciona_atividades = mysql_query("SELECT * FROM atividades ORDER BY titulo");
-$busca_horario = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
+$seleciona_professor = mysqli_query($con, "SELECT * FROM professores ORDER BY nome");
+$seleciona_atividades = mysqli_query($con, "SELECT * FROM atividades ORDER BY titulo");
+$busca_horario = mysqli_query($con, "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
 //precisa usar 2 vezes a msm busca
- $busca_horario2 = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
+ $busca_horario2 = mysqli_query($con, "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
 //precisa usar 2 vezes a msm busca 
-$busca_horario3 = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
+$busca_horario3 = mysqli_query($con, "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE horarioID='$horarioID'");
 //precisa usar 2 vezes a msm busca
 
 echo "
@@ -44,7 +44,7 @@ echo "
 	<label>
 		Atividade:
 		<br />";
-			while($linha=mysql_fetch_array($busca_horario)) {
+			while($linha=mysqli_fetch_assoc($busca_horario)) {
 				echo $linha['titulo'];
 			}
   	echo "<br />
@@ -53,7 +53,7 @@ echo "
 		Professor:
 		<br />
 		<select name='professor' onChange='MM_jumpMenu('parent',this,0)'>";
-			while($linha=mysql_fetch_array($seleciona_professor)) {
+			while($linha=mysqli_fetch_assoc($seleciona_professor)) {
 				echo "<option>".$linha['nome']."</option>";
 			}
 			
@@ -63,7 +63,7 @@ echo "
 	<label>
 		Horário Inicio:
 		<br />";
-			while($linha=mysql_fetch_array($busca_horario2)) {
+			while($linha=mysqli_fetch_assoc($busca_horario2)) {
 				echo "<input type='text' name='horarioInicio' value='".$linha['horarioInicio']."' size='5' maxlength='8'/>";
 			}
 		echo "
@@ -72,7 +72,7 @@ echo "
 	<label>
 		Horário de Termino:
 		<br />";
-			while($linha=mysql_fetch_array($busca_horario3)) {
+			while($linha=mysqli_fetch_assoc($busca_horario3)) {
 				echo "<input type='text' name='horarioTermino' value='".$linha['horarioTermino']."' size='5' maxlength='8'/>";
 			}
 		echo "

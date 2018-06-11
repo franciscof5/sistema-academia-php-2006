@@ -19,9 +19,9 @@ $titulo = $_POST['titulo'];
 $descricao = $_POST['descricao'];
 
 
-$buscarTitulo = mysql_query("SELECT titulo FROM atividades WHERE titulo='$titulo'");
+$buscarTitulo = mysqli_query($con, "SELECT titulo FROM atividades WHERE titulo='$titulo'");
 
-while ($row = mysql_fetch_array($buscarTitulo)) {
+while ($row = mysqli_fetch_assoc($buscarTitulo)) {
 	if($row['titulo']==$titulo)
 	$tituloCadastrado = true;
 	else
@@ -30,7 +30,7 @@ while ($row = mysql_fetch_array($buscarTitulo)) {
 
 
 if(!$tituloCadastrado) {
-	$inserir = mysql_query("INSERT INTO `atividades` (`titulo`, `descricao`, `atividadeID`) VALUES ('$titulo', '$descricao', '');");
+	$inserir = mysqli_query($con, "INSERT INTO `atividades` (`titulo`, `descricao`, `atividadeID`) VALUES ('$titulo', '$descricao', '');");
 	if($inserir) {
 		echo "<p align='center'><h3>Atividade: \"$titulo\" inserida com sucesso</h3></p>";
 		echo "<p><br /><a href='index_atividades.php'>voltar</a></p>";

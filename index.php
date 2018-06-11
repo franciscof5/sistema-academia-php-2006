@@ -24,7 +24,7 @@ header("Content-Type: text/html; charset=ISO-8859-1",true);
 <body>
 <?php
 if(isset($_POST['user']) && isset($_POST['pass'])) {
-	if($_POST['user']=='academia' and $_POST['pass']=='dg2486') {
+	if($_POST['user']=='gym_master' and $_POST['pass']=='dg2486') {
 		setcookie('b1s8', "curimbata", time()+1800, "/");
 		echo "<script>location='horarios/index_horario.php';</script>";
 		ob_end_flush();
@@ -60,5 +60,6 @@ if(isset($_POST['user']) && isset($_POST['pass'])) {
 	</tr>
 </table>
 </center>
+<p>LOGAR: para acessar e testar o sistema o usuário é "gym_master" e a senha "dg2486"</p>
 </body>
 </html>

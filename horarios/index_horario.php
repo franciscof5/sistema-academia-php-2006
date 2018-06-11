@@ -1,3 +1,4 @@
+<?php header("Content-Type: text/html; charset=ISO-8859-1",true); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,15 +25,15 @@
 include("../logaracademia.php");
 
 //faz as bucas, ta brincando?
-$seleciona_professor = mysql_query("SELECT * FROM professores ORDER BY nome");
-$seleciona_atividades = mysql_query("SELECT * FROM atividades ORDER BY titulo");
+$seleciona_professor = mysqli_query($con, "SELECT * FROM professores ORDER BY nome");
+$seleciona_atividades = mysqli_query($con, "SELECT * FROM atividades ORDER BY titulo");
 
 echo "
 	<center>
 	<form name='busca' action='index_horario.php' method='post'>
 		<br />
 		<select name='atividade' onChange='MM_jumpMenu('parent',this,0)'>";
-			while($linha=mysql_fetch_array($seleciona_atividades)) {
+			while($linha=mysqli_fetch_assoc($seleciona_atividades)) {
 				echo "<option>".$linha['titulo']."</option>";
 			}
   		echo "</select>
@@ -42,15 +43,22 @@ echo "
 
 //Função da busca
 
+if(isset($_POST['atividade']))
 $atividade = $_POST['atividade'];
+else
+$atividade="Nenhuma atividade encontrada";
 echo "<p align='center'><h3>$atividade</h3></p>";
 
-$busca = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.ativID INNER JOIN professores ON horarios.profID = professores.profID WHERE titulo='$atividade' ORDER BY 'dianum'");
+$bus_query = "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.atividadeID INNER JOIN professores ON horarios.profID = professores.profID WHERE titulo='$atividade' ORDER BY 'dianum'";
+
+#var_dump($bus_query);
+
+$busca = mysqli_query($con, $bus_query);
 
 if($busca) {
 	//manda ver uma tabela
 	echo "<center><table width='80%' border='1'> <tr><td class='titulo'>Dia</td><td class='titulo'>Hora</td><td class='titulo'>Professor</td><td class='titulo'>Alterar</td><td class='titulo'>Deletar</td></tr>";
-	while($linha=mysql_fetch_array($busca)) {
+	while($linha=mysqli_fetch_assoc($busca)) {
 		echo "<tr><td class='impar'>";
 		echo $linha['diastr'];
 		echo "</td><td class='impar'>";
@@ -72,10 +80,11 @@ if($busca) {
 	}
 	echo "</table></center>";
 } else {
-	echo "Erro na busca, tente novamente ou entre em contato com o suporte";
+	#echo "Erro na busca, tente novamente ou entre em contato com o suporte";
+	echo "<center>Busca não encontrou resultados</center>";
 }
 
-/*$seleciona_dados = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.atividadeID INNER JOIN professores ON horarios.profID = professores.profID ORDER BY 'horarioInicio'");
+/*$seleciona_dados = mysqli_query($con, "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.atividadeID INNER JOIN professores ON horarios.profID = professores.profID ORDER BY 'horarioInicio'");
 
 $dia1 = array("segunda", "5:00", "ballet", "junior");
 $dia2 = array("tserca", "7:00", "luta", "marcos");
@@ -141,7 +150,7 @@ while (list($key, $value) = each ($md)) {
 //$n=1;
 //$diaTabela=8;
 
-//while ($linha=mysql_fetch_array($seleciona_dados)) {
+//while ($linha=mysqli_fetch_assoc($seleciona_dados)) {
 	// o $diaTabela tem que ser passado aqui pois na função ele não é visivel
 	//atacaTD($linha['titulo'], $linha['nome'], $linha['horarioInicio'], $linha['dia']);
 	/*
@@ -245,7 +254,7 @@ while (list($key, $value) = each ($md)) {
 	
 	//$horarioAnterior = $linha['horarioInicio'];
 //}
-/*while ($linha=mysql_fetch_array($seleciona_dados)) {
+/*while ($linha=mysqli_fetch_assoc($seleciona_dados)) {
 	$horario=$linha['horarioInicio'];
 	echo "
 		  <tr>

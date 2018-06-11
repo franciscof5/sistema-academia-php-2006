@@ -38,22 +38,23 @@ if($diastr=="Domingo") {
 
 
 //Acha o ID do professor
-$buscarProfessorID = mysql_query("SELECT * FROM professores WHERE nome='$professor'");
+$buscarProfessorID = mysqli_query($con, "SELECT * FROM professores WHERE nome='$professor'");
 
-while ($row = mysql_fetch_array($buscarProfessorID)) {
+while ($row = mysqli_fetch_assoc($buscarProfessorID)) {
 	$professorID = $row['profID'];
 }
 
 //Acha o ID da atividade
-$buscarAtividadeID = mysql_query("SELECT * FROM atividades WHERE titulo='$atividade'");
+$buscarAtividadeID = mysqli_query($con, "SELECT * FROM atividades WHERE titulo='$atividade'");
 
-while ($row = mysql_fetch_array($buscarAtividadeID)) {
-	$atividadeID = $row['ativID'];
+while ($row = mysqli_fetch_assoc($buscarAtividadeID)) {
+	$atividadeID = $row['atividadeID'];
 }
 
 //ADICIONAR O HORARIO NO BANCO DE DADOS
+$hor_query = "INSERT INTO `horarios` (`dianum`, `diastr`, `horarioInicio`, `horarioTermino`, `profID`, `atividadeID`, `horarioID`) VALUES ('$dianum', '$diastr', '$horarioInicio', '$horarioTermino', '$professorID', '$atividadeID', '');";
 
-$adicionar = mysql_query("INSERT INTO `horarios` (`dianum`, `diastr`, `horarioInicio`, `horarioTermino`, `profID`, `atividadeID`, `horarioID`) VALUES ('$dianum', '$diastr', '$horarioInicio', '$horarioTermino', '$professorID', '$atividadeID', '');");
+$adicionar = mysqli_query($con, $hor_query);
 
 if($adicionar) {
 	echo "<p align='center'><h3>$atividade às $horarioInicio de $diastr cadastrado no sistema</h3></p>";

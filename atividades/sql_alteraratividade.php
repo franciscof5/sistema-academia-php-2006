@@ -16,7 +16,7 @@ $descricao = $_POST['descricao'];
 $atividadeID = $_POST['atividadeID'];
 
 
-$alterar = mysql_query("UPDATE atividades SET descricao='$descricao', titulo='$titulo' WHERE ativID='$atividadeID'");
+$alterar = mysqli_query($con, "UPDATE atividades SET descricao='$descricao', titulo='$titulo' WHERE atividadeID='$atividadeID'");
 
 if($alterar) {
 	echo "<p align='center'><h3>Descriçao de \"$titulo\" concluída</h3></p>";

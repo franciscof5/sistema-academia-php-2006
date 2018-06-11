@@ -34,8 +34,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 include("../logaracademia.php");
 
 //faz as buscas, ta brincando?
-$seleciona_professor = mysql_query("SELECT * FROM professores ORDER BY nome");
-$seleciona_atividades = mysql_query("SELECT * FROM atividades ORDER BY titulo");
+$seleciona_professor = mysqli_query($con, "SELECT * FROM professores ORDER BY nome");
+$seleciona_atividades = mysqli_query($con, "SELECT * FROM atividades ORDER BY titulo");
 
 echo "
 <form id='fhorario' name='fhorario' method='post' action='sql_cadastrarhorario.php'>
@@ -43,7 +43,7 @@ echo "
 		Atividade:
 		<br />
 		<select name='atividade' onChange='MM_jumpMenu('parent',this,0)'>";
-			while($linha=mysql_fetch_array($seleciona_atividades)) {
+			while($linha=mysqli_fetch_assoc($seleciona_atividades)) {
 				echo "<option>".$linha['titulo']."</option>";
 			}
   		echo "</select>
@@ -53,7 +53,7 @@ echo "
 		Professor:
 		<br />
 		<select name='professor' onChange='MM_jumpMenu('parent',this,0)'>";
-			while($linha=mysql_fetch_array($seleciona_professor)) {
+			while($linha=mysqli_fetch_assoc($seleciona_professor)) {
 				echo "<option>".$linha['nome']."</option>";
 			}
 			

@@ -9,7 +9,7 @@ include("../logaracademia.php");
 
 $noticiaID = $_POST['noticiaID'];
 
-$deletar = mysql_query("DELETE FROM noticias WHERE noticiaID='$noticiaID'");
+$deletar = mysqli_query($con, "DELETE FROM noticias WHERE noticiaID='$noticiaID'");
 
 if($deletar) {
 	echo "Notícia deletada";

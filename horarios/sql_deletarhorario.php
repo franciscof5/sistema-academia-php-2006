@@ -12,7 +12,7 @@ include("../logaracademia.php");
 
 $horarioID = $_POST['horarioID'];
 
-$deletar = mysql_query("DELETE FROM horarios WHERE horarioID='$horarioID'");
+$deletar = mysqli_query($con, "DELETE FROM horarios WHERE horarioID='$horarioID'");
 
 if($deletar) {
 	echo "<p align='center'><h3>Horário foi deletado</h3></p>";

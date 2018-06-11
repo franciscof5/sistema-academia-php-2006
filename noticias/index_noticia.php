@@ -91,7 +91,7 @@ echo "
 	//
 	$dataUltimoLog = date("d/m/Y-H:i");
 	//
-	$buscanoticia = mysql_query("SELECT * FROM noticias WHERE dia='$dia' AND mes='$mes' AND ano='$ano'");
+	$buscanoticia = mysqli_query($con, "SELECT * FROM noticias WHERE dia='$dia' AND mes='$mes' AND ano='$ano'");
 	if($buscanoticia) {
 		echo "
 				<table width='80%' border='1'>
@@ -102,7 +102,7 @@ echo "
 					<td class='titulo'>Alterar</td>
 					<td class='titulo'>Deletar</td>
 				  </tr>";
-		while ($linha=mysql_fetch_array($buscanoticia)) {
+		while ($linha=mysqli_fetch_assoc($buscanoticia)) {
 			echo "
 				  <tr>
 					<td class='impar'>".$linha['titulo']."</td>
@@ -124,7 +124,7 @@ echo "
 		}
 		echo "</table>";
 	} else {
-		echo mysql_error();
+		echo mysqli_error($con);
 	}
 //}
 //gerenciar_noticias (date("d"), date("m"), date("Y"));

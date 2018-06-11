@@ -13,8 +13,8 @@ include("../logaracademia.php");
 
 $atividadeID = $_POST['atividadeID'];
 
-$deletar = mysql_query("DELETE FROM atividades WHERE ativID='$atividadeID'");
-$deletar2 = mysql_query("DELETE FROM horarios WHERE atividadeID='$atividadeID'");
+$deletar = mysqli_query($con, "DELETE FROM atividades WHERE ativID='$atividadeID'");
+$deletar2 = mysqli_query($con, "DELETE FROM horarios WHERE atividadeID='$atividadeID'");
 
 if($deletar and $deletar2) {
 	echo "<p align='center'><h3>Atividade e seus horários excluídos do banco de dados</h3></p>";

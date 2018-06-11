@@ -6,12 +6,15 @@ $atividade = $_POST['atividade'];
 //$atividade = "karate";
 echo "<p align='center'>$atividade</p>";
 
-$busca = mysql_query("SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.atividadeID INNER JOIN professores ON horarios.profID = professores.profID WHERE titulo='$atividade' ORDER BY 'dianum'");
+$bus_query = "SELECT horarios. * , atividades. * , professores. * FROM horarios INNER JOIN atividades ON horarios.atividadeID = atividades.atividadeID INNER JOIN professores ON horarios.profID = professores.profID WHERE titulo='$atividade' ORDER BY 'dianum'";
+
+
+$busca = mysqli_query($con, $bus_query);
 
 if($busca) {
 	//manda ver uma tabela
 	echo "<p align='center'><table width='80%' border='1'> <tr><td>Dia</td><td>Hora</td></tr>";
-	while($linha=mysql_fetch_array($busca)) {
+	while($linha=mysqli_fetch_assoc($busca)) {
 		echo "<tr><td>";
 		echo $linha['diastr'];
 		echo "</td><td>";

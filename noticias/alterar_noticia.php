@@ -28,9 +28,9 @@ include("../logaracademia.php");
 $noticiaID = $_POST['noticiaID'];
 //$noticiaID = 2;
 
-$buscarnoticia = mysql_query("SELECT * FROM noticias WHERE noticiaID='".$noticiaID."'");
+$buscarnoticia = mysqli_query($con, "SELECT * FROM noticias WHERE noticiaID='".$noticiaID."'");
 
-while($linha=mysql_fetch_array($buscarnoticia)) {
+while($linha=mysqli_fetch_assoc($buscarnoticia)) {
 	echo "
 	<form id='formulario_noticia' name='formulario_noticia' method='post' action='sql_alterarnoticia.php'>
 	<input type='hidden' name='noticiaID' value='".$linha['noticiaID']."'/>

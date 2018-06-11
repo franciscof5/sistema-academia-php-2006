@@ -17,7 +17,7 @@ $email = $_POST['profEmail'];
 $telefone = $_POST['profTelefone'];
 
 
-$alterar = mysql_query("UPDATE professores SET endereco='$endereco', cidade='$cidade', email='$email', telefone='$telefone' WHERE nome='$nome'");
+$alterar = mysqli_query($con, "UPDATE professores SET endereco='$endereco', cidade='$cidade', email='$email', telefone='$telefone' WHERE nome='$nome'");
 
 if($alterar) {
 	echo "<p align='center'><h3>$nome teve dados alterados com sucesso</h3></p>";
