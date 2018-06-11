@@ -5,9 +5,7 @@ Manage gym classes and teachers online, with a news system. Project stopped, nev
 
 ![Sistema de Gestão de Academia 1](original-screenshot/ss1.JPG)
 
-
 ![Sistema de Gestão de Academia 2](original-screenshot/ss2.JPG)
-
 
 ![Sistema de Gestão de Academia 3](original-screenshot/ss3.JPG)
 
